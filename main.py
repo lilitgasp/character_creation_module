@@ -1,6 +1,81 @@
+"""
+Сейчас в модуле character_creation_module можно выделить три класса персонажей — Warrior, Mage и Healer.
+Персонажи этих классов должны уметь атаковать,
+защищаться и применять специальный навык, который доступен только им. Умения у всех персонажей одинаковые,
+ но работают они по-разному,
+именно поэтому в функциях, которые отвечают за способности персонажей, есть сложные if-блоки.
+Эту логику нужно перенести в классы. То есть для каждого класса нужно определить методы атаки,
+защиты и специального умения.
+Избежать дублирования кода и упростить конструкции поможет базовый класс.
+ Назовём его Character и объявим в этом классе общие методы и свойства.
+Классы Warrior, Mage и Healer будут наследниками класса Character.
+Откройте файл main.py модуля character_creation_module в редакторе кода и определите в нём структуру с учётом парадигмы ООП —
+объявите родительский класс Character и дочерние классы Warrior, Mage и Healer. Вместо тела классов используйте эллипсис.
+Далее перенесите код в поле сниппета, чтобы проверить себя.
+"""
+
+
 from random import randint
 
 from graphic_arts.start_game_banner import run_screensaver
+
+class Character:
+    def __init__(self, name):
+        self.name = name
+
+    def attack(self, damage):
+        """Наносит урон."""
+        return (f'{self.name} нанёс урон противнику равный {damage}')
+
+
+    def defence(self, block):
+        """Блокирует урон."""
+        return (f'{self.name} блокировал {block} урона')
+
+    def special(self, skill, total):
+        """Применяет специальное умение."""
+        return (f'{self.name} применил специальное умение «{skill} {total}»')
+
+
+class Warrior(Character):
+    def attack(self):
+        super().attack(5 + randint(3,5))
+
+    def defence(self):
+        super().defence(10 + randint(5, 10))
+
+    def special(self):
+        super().special("Выносливость", (80+25))
+
+
+class Mage(Character):
+    def attack(self):
+        super().attack(5+ randint(5,10))
+
+    def defence(self):
+        super().defence(10 + randint(-2, 2))
+
+    def special(self):
+        super().special("Атака", (5 + 40))
+
+
+
+class Healer(Character):
+    def attack(self):
+        super().attack(5+randint(-3,-1))
+
+    def defence(self):
+        super().defence(10 + randint(2, 5))
+
+    def special(self):
+        super().special("Защита" (10 + 30))
+
+
+
+
+
+
+
 
 
 def attack(char_name: str, char_class: str) -> str:
